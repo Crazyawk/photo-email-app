@@ -1,50 +1,20 @@
-const sgMail = require('@sendgrid/mail');
-const { Dropbox } = require('dropbox');
-
-sgMail.setApiKey(process.env.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);
-
-exports.handler = async () => {
-  const dbx = new Dropbox({ accessToken: process.env.sl.u.AFvnb9svWZv_a48yy2O5dAyvKkpRC6uMSQ6534aol4GHvJ28Oo11-Xgy0ZxoICaY0BMHCrOdntPlOO8bvLXaZPa7WzjACXpDZFzg_Pzi25rF9a7Rj7rENnTOdZ_D7GWZMOTKhLxu_GOrgb5LDJ1lx4MoVZitWnCoHyDeINqdN1WLYE_rA7ZACtghXcZdkJohkn4zwtGDcD7yBLPsxrYqcsF-c80IO41sn57Oo89xJ3xlnvqpQCeGdZd7n5lYhsq_UHqghAfMK6j_jtKCEJEtPQYY4cqUNhnu-BXoAKctpKqgVyFbacIQtvsL142e724KYMIYKO621MeLfA_TI2o5JgY3JfkEBKa5jDOnQ4LYe0KIMXblMJjbo4MJV22eWSzufBdVQTJHoAEB5jETv3qol9pkFxWqzIpTfPJO1_pDsHAQaDzjFsWkKd-P-WsB-Objq1J17hZMO5Dj83XJpZ1nJWg2bM-CKKSecWYkesAfjKFDxUOJYkIkuht6yN0vwMx9hJ0DznjQt9WKK0pYhjnIDdiPQpgjcU3W1QLwdjkGo_v6i5eCVFmioKdRYcG334IOtiwDmUtcL91DQ1LWim9YDmWoP_epctfai6RO4c6tZC1U1iVuqo9zy_TgEfLDP2-n3fv1j82s9hwscXUFhkM0P7QIqnXGTNmKf75P1zRcwo1MLVDIFmwKiszKtjOJSds4yDtAekm-bVwiKTNN7kH5kBZJiWlWGcMWzvUIVwLYyvBG-gRrfTABAYF2XwvPOQVa7gTdNaOLOHAuSL877WQf0pIlejgzfdo-pefrjHYcUK-tCFZcHZISjs4URwx2hby61jYzBIHfJuvK309LQcriAGj-2FnMzPtbkYSJ8sk15MV_NPZwJq-l3UGXWYnwvB_r28TgMdaCXT_I2PvrMs_-nSi6zOu8-Cr6OtmvM4wLfntifZKXAb0JD-5piC7wadGBUgOoHjvErYcv4U6gCWAtN1aWhvl9tIQb3Qx_bwO8jOIupSE6ClPuGYrCXcF3Nra7wmlFVH4Afgkx7ARokCpTiC0NJ9rwj3AxbKsMOk7CJPllBcviOsyYOt_vKJoMWs0CQdCC4hM1jPmC_UPpg9qVRMmD0A4TKX-3Dr1BODeLs6p6BLOQ4xWFXMH-faUpJLo3BffmjyQ8YZ5jOyw0khFdLq-jh-EpD4EDffmOTBn4QVGa6fA_kbjw9QgQAl-YWr2jvIofkhQ2au8FsjMFlAZTKRrTCXH5ks0eY1EshV5Kvvixv0j_vZMIkyGoE2gh_4Nb4XS7uxnpPyhzCfd5nIkcuVnzF35nTDsO5nLXO3j6QkbJddJ8ZHzwo9X9UPdTo4skm6GNOS1dfHQgKLA9eh5OHgyIDaKbOcBp6egZGl2ksHNhGgVUcAQUR6RJug3yYTRKdlPJzgQ4P6oooDm7kxiHCQaM6YgdsaKXSedEIbTjrsHHfA, fetch: require('node-fetch') });
-
-  try {
-    // Step 1: List all files in /photo
-    const list = await dbx.filesListFolder({ path: '/photo' });
-
-    const attachments = [];
-
-    for (const file of list.result.entries) {
-      if (file['.tag'] !== 'file') continue;
-
-      const download = await dbx.filesDownload({ path: file.path_display });
-
-      attachments.push({
-        content: download.result.fileBinary.toString('base64'),
-        filename: file.name,
-        type: download.result.content_type || 'application/octet-stream',
-        disposition: 'attachment',
-      });
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Blank</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100%;
     }
-
-    const msg = {
-      to: 'RECIPIENT_EMAIL@example.com',           // 🔁 Change to your destination
-      from: 'VERIFIED_SENDER@example.com',         // 🔁 Must be verified in SendGrid
-      subject: 'Custom Subject Goes Here',
-      text: 'Here are the files from your Dropbox folder.',
-      attachments
-    };
-
-    await sgMail.send(msg);
-
-    return {
-      statusCode: 200,
-      body: 'Email with all Dropbox files sent successfully.',
-    };
-  } catch (err) {
-    console.error('Error:', err);
-    return {
-      statusCode: 500,
-      body: 'Failed to send email.',
-    };
-  }
-};
-
+  </style>
+</head>
+<body>
+  <script>
+    fetch('/.netlify/functions/send-email', { method: 'POST' });
+  </script>
+</body>
+</html>
