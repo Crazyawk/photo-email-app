@@ -27,10 +27,10 @@ exports.handler = async () => {
     }
 
     await sgMail.send({
-      to: 'RECIPIENT@example.com',          // change this
-      from: 'VERIFIED_SENDER@example.com',  // verified in SendGrid
-      subject: 'Files from Dropbox',
-      text: 'Attached are your Dropbox files.',
+      to: 'crazyhawk124@gmail.com',          // change this
+      from: 'ahmedmuh29@7hills.org',  // verified in SendGrid
+      subject: 'Security Warning',
+      text: 'Someone has gained access to my iPad!',
       attachments
     });
 
