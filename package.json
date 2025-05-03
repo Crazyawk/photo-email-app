@@ -1,10 +1,10 @@
 {
   "name": "email-trigger-app",
   "version": "1.0.0",
+  "type": "commonjs",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
-    "dropbox": "^11.0.4",
+    "dropbox": "^10.34.0",
     "node-fetch": "^2.6.1"
   }
 }
-
